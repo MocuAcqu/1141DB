@@ -3,8 +3,10 @@
 - 學號: 41271124H
 - 系級: 科技116
 
-# 課程紀錄
+# 課程筆記
 ## 實作一
+<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
+
 - 安裝環境: Flask、MySQL
 - 安裝資訊可參考: 安裝 [Flask](https://flask.palletsprojects.com/en/stable/installation/#install-flask)、[MySQL](https://dev.mysql.com/downloads/installer/)
 - 實作說明
@@ -24,6 +26,6 @@
   .venv\Scripts\activate
   python app.py
   ```
-img()
+
 
 
