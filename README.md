@@ -20,7 +20,7 @@
   └── templates/
       └── index.html 
   ```
-- 程式碼: https://github.com/MocuAcqu/1141DB/tree/main/ex.1
+- [程式碼](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 - 啟動方式
   ```
   .venv\Scripts\activate
