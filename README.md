@@ -21,12 +21,24 @@
   └── templates/
       └── index.html 
   ```
-- [程式碼](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 - 啟動方式
   ```
   .venv\Scripts\activate
   python app.py
   ```
 
+## 實習二
+- 實作說明
+  
+  接續實作一，這次把重點放在 `Use SELECT with a conditional filter, sort, and join. (Read)` ，我延伸製作了使用者登入/註冊介面。
 
-
+- 資料結構
+```
+my-flask-app/
+├── app.py
+└── templates/
+    ├── index.html     # 主頁 (顯示留言)
+    ├── login.html     # 登入頁面
+    ├── register.html  # 註冊頁面
+    └── layout.html 
+```
