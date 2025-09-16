@@ -4,6 +4,7 @@
 - 系級: 科技116
 
 # 課程筆記
+## [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 ## 實作一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
@@ -21,12 +22,28 @@
   └── templates/
       └── index.html 
   ```
-- [程式碼](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 - 啟動方式
   ```
   .venv\Scripts\activate
   python app.py
   ```
 
+## 實習二
 
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_3.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_4.png" width="500">|
+|:--:|:--:|:--:|
 
+- 實作說明
+  
+  接續實作一，這次把重點放在 `Use SELECT with a conditional filter, sort, and join. (Read)` ，我延伸製作了使用者登入/註冊介面。
+
+- 資料結構
+```
+my-flask-app/
+├── app.py
+└── templates/
+    ├── index.html     # 主頁 (顯示留言)
+    ├── login.html     # 登入頁面
+    ├── register.html  # 註冊頁面
+    └── layout.html 
+```
