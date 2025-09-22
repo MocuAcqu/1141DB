@@ -28,7 +28,9 @@
   python app.py
   ```
 
-## 實習二
+---
+
+## 實作二
 
 |<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_3.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_4.png" width="500">|
 |:--:|:--:|:--:|
@@ -47,3 +49,8 @@ my-flask-app/
     ├── register.html  # 註冊頁面
     └── layout.html 
 ```
+
+---
+
+## HW1
+作業介紹: 建立資料庫 + Insert data
