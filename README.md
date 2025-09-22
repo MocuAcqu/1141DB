@@ -5,7 +5,7 @@
 
 # 課程筆記
 ## [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
-## 實作一
+## 實作一 + 作業一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
 - 安裝環境: Flask、MySQL
@@ -52,5 +52,9 @@ my-flask-app/
 
 ---
 
-## HW1
-作業介紹: 建立資料庫 + Insert data
+## 實作三 + 作業二
+作業介紹: 完成 CRUD
+基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_6.png" width="500">|
+|:--:|:--:|
+
