@@ -1,21 +1,91 @@
+import os 
+
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-# --- MySQL 設定 ---
-# 請根據你的 MySQL 設定修改以下資訊
-app.config['SECRET_KEY'] = 'a_really_long_and_random_string_for_security_!@#$%' 
-app.config['MYSQL_HOST'] = 'localhost'         # MySQL 伺服器主機
-app.config['MYSQL_USER'] = 'root'              # MySQL 使用者名稱
-app.config['MYSQL_PASSWORD'] = '#Vul3wu0g3' # 你的 MySQL 密碼
-app.config['MYSQL_DB'] = 'flask_message_board' # 你要連接的資料庫名稱
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor' # 設定 cursor 回傳的資料為字典形式
 
-# 初始化 MySQL
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 mysql = MySQL(app)
 
 # --- 路由 (Routes) ---
+@app.route('/delete_message/<int:message_id>', methods=['POST'])
+def delete_message(message_id):
+    # 檢查使用者是否登入
+    if 'user_id' not in session:
+        flash('請先登入', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    cur = mysql.connection.cursor()
+
+    # 安全性檢查：確認這則留言存在，並且屬於當前登入的使用者
+    cur.execute("SELECT user_id FROM messages WHERE id = %s", (message_id,))
+    message = cur.fetchone()
+
+    if not message:
+        flash('找不到該留言！', 'danger')
+    elif message['user_id'] != user_id:
+        flash('你沒有權限刪除這則留言！', 'danger')
+    else:
+        # 執行 DELETE 指令
+        cur.execute("DELETE FROM messages WHERE id = %s", (message_id,))
+        mysql.connection.commit()
+        flash('留言已成功刪除！', 'success')
+
+    cur.close()
+    return redirect(url_for('index'))
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    # 檢查使用者是否登入
+    if 'user_id' not in session:
+        flash('請先登入', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    cur = mysql.connection.cursor()
+
+    if request.method == 'POST':
+        new_username = request.form['username']
+        new_email = request.form['email']
+    
+        cur.execute("SELECT id FROM users WHERE username = %s AND id != %s", (new_username, user_id))
+        existing_username = cur.fetchone()
+
+        if existing_username:
+            flash('這個使用者名稱已經被使用了！', 'danger')
+            return redirect(url_for('profile')) 
+
+        cur.execute("SELECT id FROM users WHERE email = %s AND id != %s", (new_email, user_id))
+        existing_email = cur.fetchone()
+
+        if existing_email:
+            flash('這個 Email 已經被使用了！', 'danger')
+            return redirect(url_for('profile')) 
+        
+        cur.execute("UPDATE users SET username = %s, email = %s WHERE id = %s", 
+                    (new_username, new_email, user_id))
+        mysql.connection.commit()
+        
+        session['username'] = new_username
+
+        flash('個人資料更新成功！', 'success')
+        return redirect(url_for('profile'))
+
+    # 獲取當前使用者的資料以顯示在頁面上
+    cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    user = cur.fetchone()
+    cur.close()
+
+    return render_template('profile.html', user=user)
 
 # 主頁路由，同時處理顯示留言 (GET) 和新增留言 (POST)
 @app.route('/', methods=['GET', 'POST'])
@@ -43,7 +113,7 @@ def index():
     # 使用 JOIN 查詢來獲取留言和對應的使用者名稱
     cur = mysql.connection.cursor()
     cur.execute("""
-        SELECT m.content, m.created_at, u.username
+        SELECT m.id, m.content, m.created_at, u.username, u.id AS user_id
         FROM messages AS m
         JOIN users AS u ON m.user_id = u.id
         ORDER BY m.created_at DESC

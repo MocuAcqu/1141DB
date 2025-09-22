@@ -19,9 +19,16 @@
     {% for message in messages %}
         <div class="card mb-3">
             <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">
-                    <strong>{{ message.username }}</strong> 說：
-                </h6>
+                <div class="d-flex justify-content-between">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <strong>{{ message.username }}</strong> 說：
+                    </h6>
+                    {% if session.user_id == message.user_id %}
+                    <form action="{{ url_for('delete_message', message_id=message.id) }}" method="POST" onsubmit="return confirm('確定要刪除這則留言嗎？');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">刪除</button>
+                    </form>
+                    {% endif %}
+                </div>
                 <p class="card-text">{{ message.content }}</p>
                 <small class="text-muted">時間：{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
             </div>

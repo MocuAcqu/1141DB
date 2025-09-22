@@ -1,0 +1,61 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40; 
+}
+
+.container {
+    max-width: 800px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.alert {
+    border-radius: 8px;
+    border-left: 5px solid; 
+}
+.alert-success { border-color: #198754; }
+.alert-danger  { border-color: #dc3545; }
+.alert-warning { border-color: #ffc107; }
+.alert-info    { border-color: #0dcaf0; }

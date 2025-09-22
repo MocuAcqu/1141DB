@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}個人資料{% endblock %}
+
+{% block content %}
+    <h2>修改個人資料</h2>
+    <p>你好，<strong>{{ session.username }}</strong>！在這裡你可以更新你的個人資料。</p>
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">使用者名稱</label>
+            <input type="text" class="form-control" name="username" value="{{ user.username }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">更新資料</button>
+    </form>
+{% endblock %}
