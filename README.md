@@ -4,7 +4,9 @@
 - 系級: 科技116
 
 # 課程筆記
-## [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
+## 快速連結區
+1. [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
+2. [作業二 - 影片解說]() - 尚未上片
 ## 實作一 + 作業一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
@@ -53,8 +55,38 @@ my-flask-app/
 ---
 
 ## 實作三 + 作業二
-作業介紹: 完成 CRUD
-基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
-|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_6.png" width="500">|
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex1_6.png" width="500">|
 |:--:|:--:|
 
+- 作業介紹: 完成 CRUD
+
+  基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
+
+- 解說影片: (預計放 YT 連結)
+- 資料結構
+```
+my-flask-app/
+├── static/
+│   └── css/
+│       └── style.css 
+├── templates/
+│   ├── index.html
+│   ├── layout.html
+│   ├── login.html
+│   └── ...
+└── app.py
+```
+- CRUD 對應內容
+  #### 【C - Create (新增)】
+  - 使用者註冊 (/register)：將新的使用者名稱、Email 和密碼 INSERT 到 users 表中。
+  - 發表新留言 (主頁 /)：將留言內容和當前登入者的 user_id INSERT 到 messages 表中。
+  
+  #### 【R - Read (讀取)】
+  - 顯示所有留言 (主頁 /)：SELECT 所有留言，並 JOIN users 表來獲得留言者的 username，最後 ORDER BY 發表時間來顯示。
+  - 登入驗證 (/login)：SELECT 使用者資料 WHERE username 符合輸入值，以比對密碼。
+  
+  #### 【U - Update (更新)】
+  - 修改個人資料 (/profile)：UPDATE users 表，SET 新的 username 和 email，WHERE id 等於當前登入者的 user_id。
+  
+  #### 【D - Delete (刪除)】
+  - 刪除自己的留言 (/delete_message/...)：DELETE FROM messages WHERE id 等於指定的 message_id，並且在執行前先驗證操作者是否為留言者。
