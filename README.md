@@ -6,7 +6,7 @@
 # 課程筆記
 ## 快速連結區
 1. [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
-2. [作業二 - 影片解說]() - 尚未上片
+2. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 ## 實作一 + 作業一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
@@ -15,6 +15,53 @@
 - 實作說明
   
   課堂實作希望嘗試將 Flask 和 MySQL 結合。我製作了一個簡易「留言板」，其中，實際操作一次資料庫 table 建立的過程，並串接到 flask。用簡易的前端介面，讓使用者可以輸入「姓名」、「留言內容」，並從資料庫抓取資料顯示在介面下方。
+  
+- 作業要求
+  1. Create a table in MySQL (CREATE TABLE).
+  2. Build an Insert web page that allows you to input a record from the web.
+  3. Ensure that the inserted data is visible in the MySQL database.
+
+- 作業影片說明: https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h
+
+- 重要程式碼 (連接 Flask + MySQL 的關鍵)
+```
+# 主頁路由，同時處理顯示留言 (GET) 和新增留言 (POST)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if 'user_id' not in session:
+        flash('請先登入才能查看或發表留言', 'warning')
+        return redirect(url_for('login'))
+
+    #新增留言
+    if request.method == 'POST':
+        content = request.form['content']
+        user_id = session['user_id'] # 從 session 獲取當前登入的使用者 ID
+
+        if not content:
+            flash('留言內容不可為空！', 'danger')
+        else:
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO messages(content, user_id) VALUES(%s, %s)", (content, user_id))
+            mysql.connection.commit()
+            cur.close()
+            flash('留言成功！', 'success')
+        
+        return redirect(url_for('index'))
+    
+    # 在網頁上顯示留言
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT m.id, m.content, m.created_at, u.username, u.id AS user_id
+        FROM messages AS m
+        JOIN users AS u ON m.user_id = u.id
+        ORDER BY m.created_at DESC
+    """)
+    messages = cur.fetchall()
+    cur.close()
+
+    return render_template('index.html', messages=messages)
+
+```
 
 - 資料結構
 
