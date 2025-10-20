@@ -8,7 +8,11 @@
 1. [MySQL 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
-## 實作一 + 作業一
+
+<details>
+<summary>實作一 + 作業一</summary>
+
+## 一、實作一 + 作業一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
 - 安裝環境: Flask、MySQL
@@ -77,9 +81,12 @@ def index():
   python app.py
   ```
 
----
+</details>
 
-## 實作二
+<details>
+<summary>實作二</summary>
+  
+## 二、實作二
 
 |<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_3.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_4.png" width="500">|
 |:--:|:--:|:--:|
@@ -98,10 +105,12 @@ my-flask-app/
     ├── register.html  # 註冊頁面
     └── layout.html 
 ```
+</details>
 
----
-
-## 實作三 + 作業二
+<details>
+<summary>實作三 + 作業二</summary>
+  
+## 三、實作三 + 作業二
 |<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex1_6.png" width="500">|
 |:--:|:--:|
 
@@ -139,9 +148,12 @@ my-flask-app/
   #### 【D - Delete (刪除)】
   - 刪除自己的留言 (/delete_message/...)：DELETE FROM messages WHERE id 等於指定的 message_id，並且在執行前先驗證操作者是否為留言者。
 
-  ---
+</details>
 
-  ## 實作四
+<details>
+<summary>實作四 + 作業三</summary>
+  
+  ## 四、實作四 + 作業三
   <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_1.png" width="500">
 - 安裝環境: Mongodb
 - 安裝資訊可參考: [Mongodb](https://www.mongodb.com/try/download/community)
@@ -155,4 +167,4 @@ my-flask-app/
   venv\Scripts\activate
   python app.py
   ```
-
+</details>
