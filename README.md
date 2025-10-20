@@ -5,8 +5,9 @@
 
 # 課程筆記
 ## 快速連結區
-1. [實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
-2. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
+1. [MySQL 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
+2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
+3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 ## 實作一 + 作業一
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_1.png" width="500">
 
