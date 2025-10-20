@@ -143,5 +143,14 @@ my-flask-app/
   ## 實作四
 - 安裝環境: Mongodb
 - 安裝資訊可參考: [Mongodb](https://www.mongodb.com/try/download/community)
-- 實作說明
-- 啟動方式
+- 實作說明:
+  
+   課堂實作希望嘗試將 Flask 和 Mongodb 結合。我製作了一個「活動排隊系統」，首先在使用者登入/註冊的部分，除了基本資訊，還需要選擇身分是參加者、活動方，如果使用者是活動方，可以輸入要開放排對等號的活動，包含(活動名稱、簡述、時間、地點)，該活動除了會顯示在註冊活動的活動方介面，也會顯示在所有參加者的介面。
+
+  - 重點安裝: `pip install Flask Flask-PyMongo`
+- 啟動方式:
+  ```
+  venv\Scripts\activate
+  python app.py
+  ```
+
