@@ -23,7 +23,7 @@
 
 - 作業影片說明: https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h
 
-- 重要程式碼 (連接 Flask + MySQL 的關鍵)
+重要程式碼 (連接 Flask + MySQL 的關鍵)
 ```
 # 主頁路由，同時處理顯示留言 (GET) 和新增留言 (POST)
 @app.route('/', methods=['GET', 'POST'])
@@ -62,7 +62,6 @@ def index():
     return render_template('index.html', messages=messages)
 
 ```
-
 - 資料結構
 
   ```
@@ -105,10 +104,11 @@ my-flask-app/
 |<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex1_6.png" width="500">|
 |:--:|:--:|
 
-- 作業介紹: 完成 CRUD
+- 實作說明: 完成 CRUD
 
   基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
 
+- 作業要求:
 - 解說影片: (預計放 YT 連結)
 - 資料結構
 ```
@@ -137,3 +137,11 @@ my-flask-app/
   
   #### 【D - Delete (刪除)】
   - 刪除自己的留言 (/delete_message/...)：DELETE FROM messages WHERE id 等於指定的 message_id，並且在執行前先驗證操作者是否為留言者。
+
+  ---
+
+  ## 實作四
+- 安裝環境: Mongodb
+- 安裝資訊可參考: [Mongodb](https://www.mongodb.com/try/download/community)
+- 實作說明
+- 啟動方式
