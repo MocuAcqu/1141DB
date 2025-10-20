@@ -141,6 +141,7 @@ my-flask-app/
   ---
 
   ## 實作四
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_1.png" width="500">
 - 安裝環境: Mongodb
 - 安裝資訊可參考: [Mongodb](https://www.mongodb.com/try/download/community)
 - 實作說明:
