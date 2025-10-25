@@ -140,6 +140,9 @@ my-flask-app/
 │   └── profile.html
 └── app.py
 ```
+
+---
+
 - ERD
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_ERD.png" width="500">
 
@@ -158,6 +161,8 @@ my-flask-app/
     - content, created_at: 回覆的內容和發表時間。
     - fk: user_id: 外鍵 (FK)。記錄了發表此回覆的使用者 ID，參照到 users 表的 id。
     - fk: message_id: 外鍵 (FK)。記錄了這則回覆是針對哪一則主留言的，參照到 messages 表的 id。
+
+---
 
 - CRUD 對應內容
   #### 【C - Create (新增)】
