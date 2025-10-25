@@ -142,6 +142,23 @@ my-flask-app/
 ```
 - ERD
 <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_ERD.png" width="500">
+
+1. users: 代表註冊此系統的使用者。每一筆記錄就是一個獨立的使用者帳號。
+    - id: 主鍵 (Primary Key, PK)，用底線標示。它是每個使用者的唯一識別碼，絕不重複。
+    - username, email, password: 使用者的基本資料。
+    - registered_at: 記錄使用者註冊時間的時間戳。
+    
+2. messages: 代表使用者發表的主留言。每一筆記錄就是一則獨立的留言。
+    - id: 主鍵 (PK)，每則主留言的唯一識別碼。
+    - content, created_at: 留言的內容和發表時間。
+    - fk: user_id: 外鍵 (Foreign Key, FK)。這個欄位儲存了發表此留言的使用者 ID，它參照到 users 表的 id 欄位。
+
+3. comments: 代表針對主留言的回覆。每一筆記錄就是一則回覆。
+    - id: 主鍵 (PK)，每則回覆的唯一識別碼。
+    - content, created_at: 回覆的內容和發表時間。
+    - fk: user_id: 外鍵 (FK)。記錄了發表此回覆的使用者 ID，參照到 users 表的 id。
+    - fk: message_id: 外鍵 (FK)。記錄了這則回覆是針對哪一則主留言的，參照到 messages 表的 id。
+
 - CRUD 對應內容
   #### 【C - Create (新增)】
   - 使用者註冊 (/register)：將新的使用者名稱、Email 和密碼 INSERT 到 users 表中。
