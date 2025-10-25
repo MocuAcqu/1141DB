@@ -119,6 +119,12 @@ my-flask-app/
   基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
 
 - 作業要求:
+  1. Connecting your Python Flask application to MySQL
+  2. Adding data to the MySQL database
+  3. Draw an ERD model that includes three tables
+  4. Ensure that these three tables contain at least one type of JOIN operation (such as INNER JOIN, LEFT JOIN, or RIGHT JOIN…)
+  5. Implement full CRUD functionality (Create, Read, Update, Delete) for the tables.
+     
 - 解說影片: (預計放 YT 連結)
 - 資料結構
 ```
