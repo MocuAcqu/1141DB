@@ -122,7 +122,7 @@ my-flask-app/
   1. Connecting your Python Flask application to MySQL
   2. Adding data to the MySQL database
   3. Draw an ERD model that includes three tables
-  4. Ensure that these three tables contain at least one type of JOIN operation (such as INNER JOIN, LEFT JOIN, or RIGHT JOIN…)
+  4. Ensure that these three tables contain at least one type of JOIN operation
   5. Implement full CRUD functionality (Create, Read, Update, Delete) for the tables.
      
 - 解說影片: (預計放 YT 連結)
@@ -136,17 +136,22 @@ my-flask-app/
 │   ├── index.html
 │   ├── layout.html
 │   ├── login.html
-│   └── ...
+│   ├── register.html
+│   └── profile.html
 └── app.py
 ```
+- ERD
+<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_ERD.png" width="500">
 - CRUD 對應內容
   #### 【C - Create (新增)】
   - 使用者註冊 (/register)：將新的使用者名稱、Email 和密碼 INSERT 到 users 表中。
   - 發表新留言 (主頁 /)：將留言內容和當前登入者的 user_id INSERT 到 messages 表中。
+  - 新增回覆 (/add_comment)：將留言內容、被留言的 message_id、user_id INSERT 到 comments 表中。
   
   #### 【R - Read (讀取)】
-  - 顯示所有留言 (主頁 /)：SELECT 所有留言，並 JOIN users 表來獲得留言者的 username，最後 ORDER BY 發表時間來顯示。
+  - 顯示所有留言 (主頁 /)：首先 SELECT 所有留言，並 JOIN users 表來獲得留言者的 username，ORDER BY 發表時間來顯示。再來 SELECT 所有回覆，JOIN users 表來獲得留言者的 username。
   - 登入驗證 (/login)：SELECT 使用者資料 WHERE username 符合輸入值，以比對密碼。
+  - 顯示個人資料頁 (/profile)：讀取當前使用者的名稱與 email。
   
   #### 【U - Update (更新)】
   - 修改個人資料 (/profile)：UPDATE users 表，SET 新的 username 和 email，WHERE id 等於當前登入者的 user_id。
