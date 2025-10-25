@@ -120,6 +120,19 @@ def index():
         ORDER BY m.created_at DESC
     """)
     messages = cur.fetchall()
+
+    # 為每一則主留言查詢其對應的所有回覆 (comments)
+    for message in messages:
+        cur.execute("""
+            SELECT c.content, c.created_at, u.username
+            FROM comments AS c
+            JOIN users AS u ON c.user_id = u.id
+            WHERE c.message_id = %s
+            ORDER BY c.created_at ASC
+        """, (message['id'],))
+        # 將查詢到的回覆列表，作為一個新的鍵值對，存入 message 字典中
+        message['comments'] = cur.fetchall()
+    
     cur.close()
 
     return render_template('index.html', messages=messages)
@@ -187,5 +200,29 @@ def logout():
     flash('你已成功登出。', 'info')
     return redirect(url_for('login'))
 
+# 新增回覆
+@app.route('/add_comment/<int:message_id>', methods=['POST'])
+def add_comment(message_id):
+    if 'user_id' not in session:
+        flash('請先登入才能回覆', 'warning')
+        return redirect(url_for('login'))
+
+    content = request.form['content']
+    user_id = session['user_id']
+
+    if not content:
+        flash('回覆內容不可為空！', 'danger')
+    else:
+        cur = mysql.connection.cursor()
+        # 將回覆內容、使用者ID和主留言ID 插入 comments 表
+        cur.execute("INSERT INTO comments(content, user_id, message_id) VALUES (%s, %s, %s)",
+                    (content, user_id, message_id))
+        mysql.connection.commit()
+        cur.close()
+        flash('回覆成功！', 'success')
+    
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(debug=True)
+
