@@ -21,6 +21,8 @@
   
   課堂實作希望嘗試將 Flask 和 MySQL 結合。我製作了一個簡易「留言板」，其中，實際操作一次資料庫 table 建立的過程，並串接到 flask。用簡易的前端介面，讓使用者可以輸入「姓名」、「留言內容」，並從資料庫抓取資料顯示在介面下方。
   
+  - 重點安裝: `from flask_mysqldb import MySQL`
+  
 - 作業要求
   1. Create a table in MySQL (CREATE TABLE).
   2. Build an Insert web page that allows you to input a record from the web.
