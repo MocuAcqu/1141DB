@@ -8,6 +8,7 @@
 1. [MySQL 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
+4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -127,7 +128,7 @@ my-flask-app/
   4. Ensure that these three tables contain at least one type of JOIN operation
   5. Implement full CRUD functionality (Create, Read, Update, Delete) for the tables.
      
-- 解說影片: (預計放 YT 連結)
+- 解說影片: https://www.youtube.com/watch?v=av6wAkeqLvA
 - 資料結構
 ```
 my-flask-app/
