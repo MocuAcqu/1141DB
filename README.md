@@ -119,7 +119,7 @@ my-flask-app/
 
 - 實作說明: 完成 CRUD
 
-  基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
+  基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。並且為了使用到三個 table，我增加了劉由「回覆」功能，增加一個 comments 的 table 去紀錄使用者的回覆。
 
 - 作業要求:
   1. Connecting your Python Flask application to MySQL
