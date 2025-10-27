@@ -216,13 +216,16 @@ my-flask-app/
 
 - 實作說明:
   
-   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。
+   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。並使用 render 部屬上雲端，獲得一個可公開存取的線上連結。
+
+  - render 操作可參考: https://render.com/docs/deploy-mongodb
 
 - 作業要求:
   1. Build a New Database with a User Interface for Multiple Data Entry
   2. 部屬上 Render
 
 - 解說影片: (預期放影片)
+- Render 部屬連結: https://one141db-event-queue.onrender.com
 - 資料結構
 ```
 my-flask-app/
