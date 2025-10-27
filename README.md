@@ -114,7 +114,7 @@ my-flask-app/
 <summary>實作三 + 作業二</summary>
   
 ## 三、實作三 + 作業二
-|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex1_6.png" width="500">|
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_6.png" width="500">|
 |:--:|:--:|
 
 - 實作說明: 完成 CRUD
@@ -189,7 +189,7 @@ my-flask-app/
 <details>
 <summary>實作四 + 作業三</summary>
   
-  ## 四、實作四 + 作業三
+  ## 四、實作四
   <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_1.png" width="500">
 
   
@@ -205,4 +205,14 @@ my-flask-app/
   venv\Scripts\activate
   python app.py
   ```
+</details>
+
+ ## 五、實作五 + 作業三
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_2.png" width="500">
+
+- 實作說明:
+  
+   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。
+
+
 </details>
