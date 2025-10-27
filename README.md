@@ -8,6 +8,7 @@
 1. [MySQL 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
 2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
+4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -20,6 +21,8 @@
 - 實作說明
   
   課堂實作希望嘗試將 Flask 和 MySQL 結合。我製作了一個簡易「留言板」，其中，實際操作一次資料庫 table 建立的過程，並串接到 flask。用簡易的前端介面，讓使用者可以輸入「姓名」、「留言內容」，並從資料庫抓取資料顯示在介面下方。
+  
+  - 重點安裝: `from flask_mysqldb import MySQL`
   
 - 作業要求
   1. Create a table in MySQL (CREATE TABLE).
@@ -116,16 +119,16 @@ my-flask-app/
 
 - 實作說明: 完成 CRUD
 
-  基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。
+  基於前面的實作，我增加了 Update 修改(更新)資料的功能，以及 Delete 刪除資料的功能。同時，我也增加了 CSS 去美化這個留言板。並且為了使用到三個 table，我增加了劉由「回覆」功能，增加一個 comments 的 table 去紀錄使用者的回覆。
 
 - 作業要求:
   1. Connecting your Python Flask application to MySQL
   2. Adding data to the MySQL database
   3. Draw an ERD model that includes three tables
-  4. Ensure that these three tables contain at least one type of JOIN operation (such as INNER JOIN, LEFT JOIN, or RIGHT JOIN…)
+  4. Ensure that these three tables contain at least one type of JOIN operation
   5. Implement full CRUD functionality (Create, Read, Update, Delete) for the tables.
      
-- 解說影片: (預計放 YT 連結)
+- 解說影片: https://www.youtube.com/watch?v=av6wAkeqLvA
 - 資料結構
 ```
 my-flask-app/
@@ -136,17 +139,44 @@ my-flask-app/
 │   ├── index.html
 │   ├── layout.html
 │   ├── login.html
-│   └── ...
+│   ├── register.html
+│   └── profile.html
 └── app.py
 ```
+
+---
+
+- ERD
+<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_ERD.png" width="500">
+
+1. users: 代表註冊此系統的使用者。每一筆記錄就是一個獨立的使用者帳號。
+    - id: 主鍵 (Primary Key, PK)，用底線標示。它是每個使用者的唯一識別碼，絕不重複。
+    - username, email, password: 使用者的基本資料。
+    - registered_at: 記錄使用者註冊時間的時間戳。
+    
+2. messages: 代表使用者發表的主留言。每一筆記錄就是一則獨立的留言。
+    - id: 主鍵 (PK)，每則主留言的唯一識別碼。
+    - content, created_at: 留言的內容和發表時間。
+    - fk: user_id: 外鍵 (Foreign Key, FK)。這個欄位儲存了發表此留言的使用者 ID，它參照到 users 表的 id 欄位。
+
+3. comments: 代表針對主留言的回覆。每一筆記錄就是一則回覆。
+    - id: 主鍵 (PK)，每則回覆的唯一識別碼。
+    - content, created_at: 回覆的內容和發表時間。
+    - fk: user_id: 外鍵 (FK)。記錄了發表此回覆的使用者 ID，參照到 users 表的 id。
+    - fk: message_id: 外鍵 (FK)。記錄了這則回覆是針對哪一則主留言的，參照到 messages 表的 id。
+
+---
+
 - CRUD 對應內容
   #### 【C - Create (新增)】
   - 使用者註冊 (/register)：將新的使用者名稱、Email 和密碼 INSERT 到 users 表中。
   - 發表新留言 (主頁 /)：將留言內容和當前登入者的 user_id INSERT 到 messages 表中。
+  - 新增回覆 (/add_comment)：將留言內容、被留言的 message_id、user_id INSERT 到 comments 表中。
   
   #### 【R - Read (讀取)】
-  - 顯示所有留言 (主頁 /)：SELECT 所有留言，並 JOIN users 表來獲得留言者的 username，最後 ORDER BY 發表時間來顯示。
+  - 顯示所有留言 (主頁 /)：首先 SELECT 所有留言，並 JOIN users 表來獲得留言者的 username，ORDER BY 發表時間來顯示。再來 SELECT 所有回覆，JOIN users 表來獲得留言者的 username。
   - 登入驗證 (/login)：SELECT 使用者資料 WHERE username 符合輸入值，以比對密碼。
+  - 顯示個人資料頁 (/profile)：讀取當前使用者的名稱與 email。
   
   #### 【U - Update (更新)】
   - 修改個人資料 (/profile)：UPDATE users 表，SET 新的 username 和 email，WHERE id 等於當前登入者的 user_id。
