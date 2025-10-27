@@ -114,7 +114,7 @@ my-flask-app/
 <summary>實作三 + 作業二</summary>
   
 ## 三、實作三 + 作業二
-|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex1_6.png" width="500">|
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_5.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.1_6.png" width="500">|
 |:--:|:--:|
 
 - 實作說明: 完成 CRUD
@@ -187,9 +187,9 @@ my-flask-app/
 </details>
 
 <details>
-<summary>實作四 + 作業三</summary>
+<summary>實作四</summary>
   
-  ## 四、實作四 + 作業三
+  ## 四、實作四
   <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_1.png" width="500">
 
   
@@ -205,4 +205,33 @@ my-flask-app/
   venv\Scripts\activate
   python app.py
   ```
+</details>
+
+<details>
+<summary>實作五 + 作業三</summary>
+  
+ ## 五、實作五 + 作業三
+  
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_2.png" width="500">
+
+- 實作說明:
+  
+   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。
+
+- 作業要求:
+  1. Build a New Database with a User Interface for Multiple Data Entry
+  2. 部屬上 Render
+
+- 解說影片: (預期放影片)
+- 資料結構
+```
+my-flask-app/
+├── templates/
+│   ├── base.html
+│   ├── logout.html
+│   ├── login.html
+│   ├── register.html
+│   └── profile.html
+└── app.py
+```
 </details>
