@@ -226,6 +226,7 @@ my-flask-app/
 
 - 解說影片: (預期放影片)
 - Render 部屬連結: https://one141db-event-queue.onrender.com
+- 用於連接 Render 的 repo: https://github.com/MocuAcqu/1141DB_ex.2
 - 資料結構
 ```
 my-flask-app/
