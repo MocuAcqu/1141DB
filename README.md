@@ -9,6 +9,7 @@
 2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
+5. [作業三 - 影片解說](https://youtu.be/CEnzNlN9Kws)
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -222,9 +223,9 @@ my-flask-app/
 
 - 作業要求:
   1. Build a New Database with a User Interface for Multiple Data Entry
-  2. 部屬上 Render
+  2. Deploy the project using Render
 
-- 解說影片: (預期放影片)
+- 解說影片: https://youtu.be/CEnzNlN9Kws
 - Render 部屬連結: https://one141db-event-queue.onrender.com
 - 用於連接 Render 的 repo: https://github.com/MocuAcqu/1141DB_ex.2
 - 資料結構
