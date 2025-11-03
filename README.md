@@ -9,6 +9,7 @@
 2. [Mongodb 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.2)
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
+5. [作業三 - 影片解說](https://youtu.be/CEnzNlN9Kws)
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -216,13 +217,17 @@ my-flask-app/
 
 - 實作說明:
   
-   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。
+   基於活動方登記活動的部分，我們藉由 `insert_many()` 去增加「批次新增」、「csv 新增」的功能。並使用 render 部屬上雲端，獲得一個可公開存取的線上連結。
+
+  - render 操作可參考: https://render.com/docs/deploy-mongodb
 
 - 作業要求:
   1. Build a New Database with a User Interface for Multiple Data Entry
-  2. 部屬上 Render
+  2. Deploy the project using Render
 
-- 解說影片: (預期放影片)
+- 解說影片: https://youtu.be/CEnzNlN9Kws
+- Render 部屬連結: https://one141db-event-queue.onrender.com
+- 用於連接 Render 的 repo: https://github.com/MocuAcqu/1141DB_ex.2
 - 資料結構
 ```
 my-flask-app/
@@ -235,3 +240,23 @@ my-flask-app/
 └── app.py
 ```
 </details>
+
+<details>
+<summary>實作六</summary>
+  
+ ## 六、實作六
+  
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_3.png" width="500">
+
+- 實作說明:
+  新增了搜尋(find)、排序(sort)和修改功能(update_many)。
+  - `find()`
+    我在 /profile.html 加入活動名稱搜尋功能。
+    
+  - `sort()`
+    增加「活動方名稱」、「活動名稱」的 ascending 和 descending 的排序。
+
+  - `update_many`
+    活動方可以藉由 checkbox 勾選活動，統一修改時間或地點。
+
+  </details>
