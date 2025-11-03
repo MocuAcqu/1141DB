@@ -240,3 +240,23 @@ my-flask-app/
 └── app.py
 ```
 </details>
+
+<details>
+<summary>實作五 + 作業三</summary>
+  
+ ## 六、實作六
+  
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_3.png" width="500">
+
+- 實作說明:
+  新增了搜尋(find)、排序(sort)和修改功能(update_many)。
+  - find()
+    我在 /profile.html 加入活動名稱搜尋功能。
+    
+  - sort()
+    增加「活動方名稱」、「活動名稱」的 ascending 和 descending 的排序。
+
+  - update_many
+    活動方可以藉由 checkbox 勾選活動，統一修改時間或地點。
+
+  </details>
