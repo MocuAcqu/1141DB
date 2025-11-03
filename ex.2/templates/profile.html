@@ -16,43 +16,87 @@
     </div>
 </div>
 
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('profile') }}" class="row g-3 align-items-center">
+            <!-- 搜尋功能 -->
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-text" style="padding: 5px;">
+                        <img src="../static/images/search.png" width="50px">
+                    </span>
+                    <input type="text" class="form-control" name="q" placeholder="搜尋活動名稱..." value="{{ request.args.get('q', '') }}">
+                </div>
+            </div>
+
+            <!-- 排序功能 (改用下拉選單) -->
+            <div class="col-md-5 d-flex justify-content-end align-items-center">
+                <label for="sort-select" class="form-label me-2 mb-0">排序依:</label>
+                <select class="form-select w-auto" id="sort-select" name="sort" onchange="this.form.submit()">
+                    <!-- 根據不同角色，提供不同的排序選項 -->
+                    {% if session.role == 'organizer' %}
+                        <!-- 活動方選項 -->
+                        <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %}selected{% endif %}>活動名稱 (A-Z)</option>
+                        <option value="name_desc" {% if request.args.get('sort') == 'name_desc' or not request.args.get('sort') %}selected{% endif %}>活動名稱 (Z-A)</option>
+                    {% else %}
+                        <!-- 參加者選項 -->
+                        <option value="organizer_desc" {% if request.args.get('sort') == 'organizer_desc' or not request.args.get('sort') %}selected{% endif %}>活動方名稱 (Z-A)</option>
+                        <option value="organizer_asc" {% if request.args.get('sort') == 'organizer_asc' %}selected{% endif %}>活動方名稱 (A-Z)</option>
+                        <option value="name_asc" {% if request.args.get('sort') == 'name_asc' %}selected{% endif %}>活動名稱 (A-Z)</option>
+                        <option value="name_desc" {% if request.args.get('sort') == 'name_desc' %}selected{% endif %}>活動名稱 (Z-A)</option>
+                    {% endif %}
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- 根據身分顯示不同內容 -->
 {% if session.role == 'organizer' %}
     <!-- ==================== 活動方介面 ==================== -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">我舉辦的活動</h2>
-        <div class="btn-group">
-            <!-- 單筆新增按鈕 -->
-            <button type="button" class="btn  shadow-sm" style="border-color: rgb(82, 82, 82);" data-bs-toggle="modal" data-bs-target="#createEventModal" title="新增單筆活動">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
-            </button>
-            <!-- 批次新增按鈕 -->
-            <button type="button" class="btn shadow-sm" style="border-color: rgb(82, 82, 82);" data-bs-toggle="modal" data-bs-target="#bulkCreateModal" title="批次新增活動">
-                批次新增
-            </button>
-            <!-- CSV 匯入按鈕 -->
-            <button type="button" class="btn shadow-sm" style="background-color: rgb(49, 107, 34); color: #ece9e9;" data-bs-toggle="modal" data-bs-target="#importCsvModal" title="從 CSV 匯入">
-                匯入 CSV
-            </button>
-        </div>
-    </div>
-    <div class="row">
-        {% for event in my_events %}
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow border-0">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold">{{ event.name }}</h5>
-                    <p class="card-text flex-grow-1">{{ event.description }}</p>
-                    <p class="card-text"><small class="text-muted">時間: {{ event.time.replace('T', ' ') }}</small></p>
-                    <p class="card-subtitle mb-2 text-muted">地點: {{ event.location }}</p>
-                    <a href="#" class="btn btn-outline-primary mt-auto">管理活動</a>
-                </div>
+    <form id="bulk-action-form" method="POST" action="{{ url_for('update_events_bulk') }}">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">我舉辦的活動</h2>
+            <div class="btn-group">
+                <!-- 批次修改按鈕，預設為禁用狀態 -->
+                <button type="button" id="bulk-edit-btn" class="btn btn-warning shadow-sm" style="border-color: rgb(82, 82, 82); color: #000000;" data-bs-toggle="modal" data-bs-target="#bulkUpdateModal" disabled>
+                    修改選中項
+                </button>
+                <!-- 單筆新增按鈕 -->
+                <button type="button" class="btn  shadow-sm" style="border-color: rgb(82, 82, 82);" data-bs-toggle="modal" data-bs-target="#createEventModal" title="新增單筆活動">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
+                </button>
+                <!-- 批次新增按鈕 -->
+                <button type="button" class="btn shadow-sm" style="border-color: rgb(82, 82, 82);" data-bs-toggle="modal" data-bs-target="#bulkCreateModal" title="批次新增活動">
+                    批次新增
+                </button>
+                <!-- CSV 匯入按鈕 -->
+                <button type="button" class="btn shadow-sm" style="background-color: rgb(49, 107, 34); color: #ece9e9;" data-bs-toggle="modal" data-bs-target="#importCsvModal" title="從 CSV 匯入">
+                    匯入 CSV
+                </button>
             </div>
         </div>
-        {% else %}
-        <p class="text-center text-muted mt-5">您尚未建立任何活動，點擊右上方 '+' 按鈕來新增一個吧！</p>
-        {% endfor %}
-    </div>
+        <div class="row">
+            {% for event in my_events %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow border-0">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title fw-bold">{{ event.name }}</h5>
+                            <input class="form-check-input" type="checkbox" name="event_ids" value="{{ event._id }}">
+                        </div>
+                        <h6 class="card-text flex-grow-1">{{ event.description }}</h6>
+                        <p class="card-text"><small class="text-muted">時間: {{ event.time.replace('T', ' ') }}</small></p>
+                        <p class="card-subtitle mb-2 text-muted">地點: {{ event.location }}</p>
+                        <a href="#" class="btn btn-outline-primary mt-auto">管理活動</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center text-muted mt-5">您尚未建立任何活動，點擊右上方 '+' 按鈕來新增一個吧！</p>
+            {% endfor %}
+        </div>
+    </form>
 
 {% else %}
     <!-- ==================== 參加者介面 ==================== -->
@@ -187,11 +231,39 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="bulkUpdateModal" tabindex="-1" aria-labelledby="bulkUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- 這個 Modal 的內容會由上面的 form 動態提交 -->
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="bulkUpdateModalLabel">批次修改活動</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">注意：以下欄位若留空將不會被修改。填寫後將會覆蓋所有選中活動的對應資料。</p>
+                <div class="mb-3">
+                    <label for="bulk_event_time" class="form-label">統一修改活動時間為</label>
+                    <!-- 將 form 屬性指向外面的大表單 -->
+                    <input type="datetime-local" class="form-control" id="bulk_event_time" name="bulk_event_time" form="bulk-action-form">
+                </div>
+                <div class="mb-3">
+                    <label for="bulk_location" class="form-label">統一修改活動地點為</label>
+                    <input type="text" class="form-control" id="bulk_location" name="bulk_location" form="bulk-action-form" placeholder="例如：線上會議室">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <!-- 這個按鈕會提交外面的大表單 -->
+                <button type="submit" class="btn btn-primary" form="bulk-action-form">確認修改</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}
 {% block scripts %}
-<!-- 新增一個 block 來放頁面專屬的 script -->
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const addEventBtn = document.getElementById('add-event-btn');
@@ -227,6 +299,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             container.appendChild(newFormGroup);
+        });
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('input[name="event_ids"]');
+    const bulkEditBtn = document.getElementById('bulk-edit-btn');
+
+    if (checkboxes.length > 0 && bulkEditBtn) {
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // 檢查是否有任何一個 checkbox 被選中
+                const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+                // 根據是否有選中項來啟用或禁用按鈕
+                bulkEditBtn.disabled = !anyChecked;
+            });
         });
     }
 });

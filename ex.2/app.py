@@ -1,6 +1,7 @@
 import os
 import csv  
 import io   
+from pymongo import ASCENDING, DESCENDING
 from werkzeug.utils import secure_filename 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, flash
@@ -95,14 +96,44 @@ def profile():
         flash("請先登入！")
         return redirect(url_for('login'))
 
-    # 根據不同身分，從資料庫讀取不同的活動資料
+    user_id_obj = ObjectId(session['user_id'])
+    user = mongo.db.users.find_one({'_id': user_id_obj})
+    if not user:
+        session.clear()
+        flash("找不到使用者資料，請重新登入。")
+        return redirect(url_for('login'))
+
+    search_query = request.args.get('q', '') 
     if session['role'] == 'organizer':
-        user_id_obj = ObjectId(session['user_id'])
-        my_events = list(mongo.db.events.find({'organizer_id': user_id_obj}))
-        return render_template('profile.html', my_events=my_events)
+        sort_param = request.args.get('sort', 'name_desc') 
     else:
-        all_events = list(mongo.db.events.find({}))
-        return render_template('profile.html', all_events=all_events)
+        sort_param = request.args.get('sort', 'organizer_desc')
+
+    query_filter = {} # 基本的查詢過濾器，預設為空 (查詢所有)
+
+    # 如果有搜尋關鍵字，則增加查詢條件
+    if search_query:
+        query_filter['name'] = {'$regex': search_query, '$options': 'i'}
+    
+    sort_condition = []
+    if sort_param == 'name_asc':
+        sort_condition = [('name', ASCENDING)]
+    elif sort_param == 'name_desc':
+        sort_condition = [('name', DESCENDING)]
+    elif sort_param == 'organizer_asc':
+        sort_condition = [('organizer_name', ASCENDING)]
+    elif sort_param == 'organizer_desc':
+        sort_condition = [('organizer_name', DESCENDING)]
+    else: 
+        sort_condition = [('name', DESCENDING)]
+
+    if session['role'] == 'organizer':
+        query_filter['organizer_id'] = user_id_obj
+        my_events = list(mongo.db.events.find(query_filter).sort(sort_condition))
+        return render_template('profile.html', user=user, my_events=my_events)
+    else: 
+        all_events = list(mongo.db.events.find(query_filter).sort(sort_condition))
+        return render_template('profile.html', user=user, all_events=all_events)
 
 @app.route('/logout', methods=['GET'])
 def show_logout_page():
@@ -232,6 +263,49 @@ def import_events_csv():
     else:
         flash("只允許上傳 CSV 格式的檔案！")
 
+    return redirect(url_for('profile'))
+
+@app.route('/update_events_bulk', methods=['POST'])
+def update_events_bulk():
+    if 'user_id' not in session or session.get('role') != 'organizer':
+        flash("權限不足！")
+        return redirect(url_for('profile'))
+
+    # 獲取所有被選中的活動 ID
+    event_ids_str = request.form.getlist('event_ids')
+    if not event_ids_str:
+        flash("您沒有選擇任何要修改的活動。")
+        return redirect(url_for('profile'))
+
+    # 獲取要更新的資料
+    new_time = request.form.get('bulk_event_time')
+    new_location = request.form.get('bulk_location')
+
+    # 建立要更新的欄位字典
+    update_fields = {}
+    if new_time:
+        update_fields['time'] = new_time
+    if new_location:
+        update_fields['location'] = new_location
+
+    if not update_fields:
+        flash("您沒有填寫任何要修改的內容。")
+        return redirect(url_for('profile'))
+
+    # 將字串 ID 列表轉換為 ObjectId 列表
+    event_ids_obj = [ObjectId(id_str) for id_str in event_ids_str]
+
+    result = mongo.db.events.update_many(
+        {
+            '_id': { '$in': event_ids_obj }, # 條件：_id 在我們選中的 ID 列表中
+            'organizer_id': ObjectId(session['user_id']) # 確保只能修改自己的活動
+        },
+        {
+            '$set': update_fields 
+        }
+    )
+
+    flash(f"成功更新了 {result.modified_count} 筆活動！")
     return redirect(url_for('profile'))
 
 if __name__ == '__main__':
