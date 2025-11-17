@@ -54,13 +54,16 @@
 <!-- 根據身分顯示不同內容 -->
 {% if session.role == 'organizer' %}
     <!-- ==================== 活動方介面 ==================== -->
-    <form id="bulk-action-form" method="POST" action="{{ url_for('update_events_bulk') }}">
+    <form id="bulk-action-form" method="POST">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold">我舉辦的活動</h2>
             <div class="btn-group">
                 <!-- 批次修改按鈕，預設為禁用狀態 -->
                 <button type="button" id="bulk-edit-btn" class="btn btn-warning shadow-sm" style="border-color: rgb(82, 82, 82); color: #000000;" data-bs-toggle="modal" data-bs-target="#bulkUpdateModal" disabled>
                     修改選中項
+                </button>
+                <button type="button" id="bulk-delete-btn" class="btn btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#bulkDeleteConfirmModal" disabled>
+                    刪除選中項
                 </button>
                 <!-- 單筆新增按鈕 -->
                 <button type="button" class="btn  shadow-sm" style="border-color: rgb(82, 82, 82);" data-bs-toggle="modal" data-bs-target="#createEventModal" title="新增單筆活動">
@@ -89,6 +92,13 @@
                         <p class="card-text"><small class="text-muted">時間: {{ event.time.replace('T', ' ') }}</small></p>
                         <p class="card-subtitle mb-2 text-muted">地點: {{ event.location }}</p>
                         <a href="#" class="btn btn-outline-primary mt-auto">管理活動</a>
+                        <button type="button" class="btn btn-outline-danger" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteConfirmModal"
+                            data-bs-event-id="{{ event._id }}"
+                            data-bs-event-name="{{ event.name }}" style="margin-top: 10px;">
+                            刪除
+                        </button>
                     </div>
                 </div>
             </div>
@@ -259,6 +269,46 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="deleteConfirmModalLabel">確認刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要永久刪除這個活動嗎？這個操作無法復原。</p>
+                <p>即將刪除： <strong id="eventNameToDelete" class="text-danger"></strong></p>
+            </div>
+            <div class="modal-footer">
+                <!-- 這個 form 會在 JS 中被動態設定 action -->
+                <form id="deleteForm" method="POST" action="">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">確認刪除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="bulkDeleteConfirmModal" tabindex="-1" aria-labelledby="bulkDeleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="bulkDeleteConfirmModalLabel">確認批次刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要永久刪除 <strong id="selectedCount" class="text-danger"></strong> 個選中的活動嗎？</p>
+                <p class="text-danger">這個操作無法復原。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <!-- 這個按鈕會觸發外層 form 的提交 -->
+                <button type="submit" class="btn btn-danger" id="confirmBulkDeleteBtn">確認刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}
@@ -317,6 +367,90 @@ document.addEventListener('DOMContentLoaded', () => {
                 bulkEditBtn.disabled = !anyChecked;
             });
         });
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteModal = document.getElementById('deleteConfirmModal');
+    if (deleteModal) {
+        // 監聽 Modal 即將顯示的事件
+        deleteModal.addEventListener('show.bs.modal', event => {
+            // 獲取觸發這個 Modal 的按鈕
+            const button = event.relatedTarget;
+            
+            // 從按鈕的 data-* 屬性中提取活動 ID 和名稱
+            const eventId = button.getAttribute('data-bs-event-id');
+            const eventName = button.getAttribute('data-bs-event-name');
+            
+            // 更新 Modal 中的內容，讓使用者知道他們在刪除什麼
+            const eventNameSpan = deleteModal.querySelector('#eventNameToDelete');
+            eventNameSpan.textContent = eventName;
+            
+            // 動態設定 Modal 中 form 的 action URL
+            const deleteForm = deleteModal.querySelector('#deleteForm');
+            deleteForm.action = `/delete_event/${eventId}`;
+        });
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 啟用/禁用按鈕的邏輯 (擴充) ---
+    const checkboxes = document.querySelectorAll('input[name="event_ids"]');
+    const bulkEditBtn = document.getElementById('bulk-edit-btn');
+    const bulkDeleteBtn = document.getElementById('bulk-delete-btn'); // 新增
+
+    if (checkboxes.length > 0 && bulkEditBtn && bulkDeleteBtn) {
+        const updateButtonStates = () => {
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            bulkEditBtn.disabled = !anyChecked;
+            bulkDeleteBtn.disabled = !anyChecked; // 同時更新刪除按鈕
+        };
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateButtonStates);
+        });
+        updateButtonStates(); // 頁面載入時先執行一次
+    }
+
+    // --- 批次刪除 Modal 的邏輯 (新增) ---
+    const bulkDeleteModal = document.getElementById('bulkDeleteConfirmModal');
+    if (bulkDeleteModal) {
+        bulkDeleteModal.addEventListener('show.bs.modal', () => {
+            // 計算被選中的 checkbox 數量
+            const selectedCount = document.querySelectorAll('input[name="event_ids"]:checked').length;
+            // 更新 Modal 中的文字
+            const countSpan = bulkDeleteModal.querySelector('#selectedCount');
+            countSpan.textContent = selectedCount;
+        });
+
+        const confirmBtn = document.getElementById('confirmBulkDeleteBtn');
+        const bulkForm = document.getElementById('bulk-action-form');
+        if(confirmBtn && bulkForm) {
+            confirmBtn.addEventListener('click', () => {
+                // 動態設定 form 的 action 指向批次刪除的路由
+                bulkForm.action = "{{ url_for('delete_events_bulk') }}";
+                bulkForm.submit(); // 手動提交表單
+            });
+        }
+    }
+    
+    // --- 批次修改 Modal 的邏輯 (修改) ---
+    const bulkUpdateModal = document.getElementById('bulkUpdateModal');
+    if (bulkUpdateModal) {
+        // 找到 Modal 裡的提交按鈕
+        const confirmUpdateBtn = bulkUpdateModal.querySelector('button[type="submit"]');
+        const bulkForm = document.getElementById('bulk-action-form');
+        if(confirmUpdateBtn && bulkForm) {
+            confirmUpdateBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // 先阻止預設的提交行為
+                // 動態設定 form 的 action 指向批次更新的路由
+                bulkForm.action = "{{ url_for('update_events_bulk') }}";
+                bulkForm.submit(); // 再手動提交表單
+            });
+        }
     }
 });
 </script>

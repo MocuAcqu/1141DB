@@ -308,5 +308,54 @@ def update_events_bulk():
     flash(f"成功更新了 {result.modified_count} 筆活動！")
     return redirect(url_for('profile'))
 
+@app.route('/delete_event/<string:event_id>', methods=['POST'])
+def delete_event(event_id):
+    if 'user_id' not in session or session.get('role') != 'organizer':
+        flash("權限不足！")
+        return redirect(url_for('profile'))
+
+    try:
+        event_id_obj = ObjectId(event_id)
+    except Exception:
+        flash("無效的活動 ID。")
+        return redirect(url_for('profile'))
+
+    result = mongo.db.events.delete_one({
+        '_id': event_id_obj,
+        'organizer_id': ObjectId(session['user_id'])
+    })
+
+    if result.deleted_count == 1:
+        flash("活動已成功刪除！")
+    else:
+        flash("刪除失敗，找不到活動或您沒有權限。")
+
+    return redirect(url_for('profile'))
+
+@app.route('/delete_events_bulk', methods=['POST'])
+def delete_events_bulk():
+    if 'user_id' not in session or session.get('role') != 'organizer':
+        flash("權限不足！")
+        return redirect(url_for('profile'))
+
+    event_ids_str = request.form.getlist('event_ids')
+    if not event_ids_str:
+        flash("您沒有選擇任何要刪除的活動。")
+        return redirect(url_for('profile'))
+
+    event_ids_obj = [ObjectId(id_str) for id_str in event_ids_str]
+
+    result = mongo.db.events.delete_many({
+        '_id': { '$in': event_ids_obj }, 
+        'organizer_id': ObjectId(session['user_id']) 
+    })
+
+    if result.deleted_count > 0:
+        flash(f"成功刪除了 {result.deleted_count} 筆活動！")
+    else:
+        flash("刪除失敗，找不到任何可刪除的活動。")
+    
+    return redirect(url_for('profile'))
+
 if __name__ == '__main__':
     app.run(debug=True)
