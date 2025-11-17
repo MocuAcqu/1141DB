@@ -10,6 +10,7 @@
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
 5. [作業三 - 影片解說](https://youtu.be/CEnzNlN9Kws)
+6. [作業四 - 影片解說]()
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -260,3 +261,19 @@ my-flask-app/
     活動方可以藉由 checkbox 勾選活動，統一修改時間或地點。
 
   </details>
+
+<details>
+<summary>實作六</summary>
+  
+ ## 七、實作七
+  
+  <img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/ex.2_4.png" width="500">
+
+- 實作說明:
+  新增了單項活動刪除、批次刪除功能，活動方可以刪除之前所建立的活動。
+
+- 作業要求:
+  1. add the multiple-delete feature
+
+- 解說影片: (預計這裡放連結)
+</details>
