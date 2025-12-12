@@ -3,6 +3,13 @@
 - 學號: 41271124H
 - 系級: 科技116
 
+# 期末專案
+[期末專案 repo](https://github.com/MocuAcqu/DB_finalPJ_TKP)
+[期末報告影片](https://youtu.be/QfTn0Um9Gx0?si=f92HRsoFd3A041fz)
+[專案連結-render部屬](https://db-finalpj-tkp.onrender.com/)
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP1.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP.png" width="500">|
+|:--:|:--:|:--:|
+
 # 課程筆記
 ## 快速連結區
 1. [MySQL 實作程式碼連結](https://github.com/MocuAcqu/1141DB/tree/main/ex.1)
@@ -10,7 +17,7 @@
 3. [作業一 - 影片解說](https://youtu.be/GURVYD-b9EQ?si=pIod6bg15WtA4c0h)
 4. [作業二 - 影片解說](https://www.youtube.com/watch?v=av6wAkeqLvA)
 5. [作業三 - 影片解說](https://youtu.be/CEnzNlN9Kws)
-6. [作業四 - 影片解說]()
+6. [作業四 - 影片解說](https://www.youtube.com/watch?v=ITPiUunZm3k)
 
 <details>
 <summary>實作一 + 作業一</summary>
@@ -263,7 +270,7 @@ my-flask-app/
   </details>
 
 <details>
-<summary>實作六</summary>
+<summary>實作七</summary>
   
  ## 七、實作七
   
@@ -275,5 +282,5 @@ my-flask-app/
 - 作業要求:
   1. add the multiple-delete feature
 
-- 解說影片: (預計這裡放連結)
+- 解說影片: https://www.youtube.com/watch?v=ITPiUunZm3k
 </details>
