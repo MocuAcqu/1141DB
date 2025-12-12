@@ -4,11 +4,20 @@
 - 系級: 科技116
 
 # 期末專案
-[期末專案 repo](https://github.com/MocuAcqu/DB_finalPJ_TKP)
-[期末報告影片](https://youtu.be/QfTn0Um9Gx0?si=f92HRsoFd3A041fz)
-[專案連結-render部屬](https://db-finalpj-tkp.onrender.com/)
+### [【 期末報告影片 Database system Final Report video 】](https://youtu.be/QfTn0Um9Gx0?si=f92HRsoFd3A041fz)
+- [期末專案 repo](https://github.com/MocuAcqu/DB_finalPJ_TKP)
+- [專案部屬連結-render](https://db-finalpj-tkp.onrender.com/)
+
 |<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP1.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP.png" width="500">|
 |:--:|:--:|:--:|
+
+### 專案簡述
+TKP is a platform that integrates buying, selling, exchanging, and renting into one system. Our goal is to create a platform that connects “items” and “needs” more quickly and transparently.
+
+By combining exchange, sale, and rental functions in one place, TKP provides an environment where users can match with what they need in a fast, clear, and secure way. 
+
+Users can easily find items they are looking for, or turn their unused belongings into something valuable—whether through bartering, direct selling, or short-term rental.
+
 
 # 課程筆記
 ## 快速連結區
