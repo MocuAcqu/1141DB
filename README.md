@@ -5,6 +5,10 @@
 
 # 期末專案
 [期末專案 repo](https://github.com/MocuAcqu/DB_finalPJ_TKP)
+[期末報告影片](https://youtu.be/QfTn0Um9Gx0?si=f92HRsoFd3A041fz)
+[專案連結-render部屬](https://db-finalpj-tkp.onrender.com/)
+|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP2.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP1.png" width="500">|<img src="https://github.com/MocuAcqu/1141DB/blob/main/readme_images/TKP.png" width="500">|
+|:--:|:--:|:--:|
 
 # 課程筆記
 ## 快速連結區
